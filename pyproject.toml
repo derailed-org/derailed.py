@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "derailed"
+version = "0.1.0"
+description = "Python wrapper for the Derailed API"
+authors = ["VincentRPS <vincentbusiness55@gmail.com>"]
+license = "MIT"
+
+[tool.isort]
+profile = 'black'
+
+[tool.black]
+target-version = ['py310']
+skip-string-normalization = true
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiohttp = "^3.8.1"
+websockets = "^10.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
