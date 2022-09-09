@@ -268,7 +268,7 @@ class Interactor:
     ) -> Track:
         return await self.request(
             'POST',
-            f'/guild/{guild_id}/tracks',
+            f'/guilds/{guild_id}/tracks',
             replace_undefined(
                 name=name,
                 type=type,
