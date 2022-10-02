@@ -32,7 +32,7 @@ from .errors import HTTPException
 from .types.guild import Guild
 from .types.relationship import Relationship
 from .types.role import Role
-from .types.track import Track
+from .types.track import Message, Track
 from .types.user import Profile, Settings, User
 from .utils import UNDEFINED, replace_undefined
 
@@ -281,7 +281,7 @@ class Interactor:
     async def modify_guild_tracks(
         self, guild_id: str, modifications: list[GuildTrackModification]
     ) -> None:
-        return await self.request('PATCH', f'/guilds/{guild_id}/tracks/', modifications)
+        return await self.request('PATCH', f'/guilds/{guild_id}/tracks', modifications)
 
     async def create_group_dm(
         self, name: str, user_ids: list[str], topic: str = UNDEFINED
@@ -301,3 +301,24 @@ class Interactor:
 
     async def close_track(self, track_id: str) -> None:
         return await self.request('DELETE', f'/tracks/{track_id}')
+
+    async def get_track_messages(self, track_id: str) -> list[Message]:
+        return await self.request('GET', f'/tracks/{track_id}/messages')
+
+    async def get_track_message(self, track_id: str, message_id: str) -> Message:
+        return await self.request('GET', f'/tracks/{track_id}/messages/{message_id}')
+
+    async def create_message(self, track_id: str, content: str) -> Message:
+        return await self.request(
+            'POST', f'/tracks/{track_id}/messages', {'content': content}
+        )
+
+    async def modify_message(
+        self, track_id: str, message_id: str, content: str
+    ) -> Message:
+        return await self.request(
+            'PATCH', f'/tracks/{track_id}/messages/{message_id}', {'content': content}
+        )
+
+    async def delete_message(self, track_id: str, message_id: str) -> None:
+        return await self.request('DELETE', f'/tracks/{track_id}/messages/{message_id}')
